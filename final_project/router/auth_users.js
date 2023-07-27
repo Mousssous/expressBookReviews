@@ -3,12 +3,11 @@ const jwt = require('jsonwebtoken');
 let books = require("./booksdb.js");
 const regd_users = express.Router();
 
-let users = [{"username":"test", "password":"test"}];
+let users = [];
 
 const isValid = (username)=>{ //returns boolean
 //write code to check is the username is valid
   let validUserName = body.req.username;
-  console.log(validUserName);
   if(validUserName.length > 0){
     res.status('Valide username');
   }else{
@@ -55,7 +54,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 
   const review = req.query.review;
 
-  const username = req.session.username;
+  const username = req.session.authorization.username;
 
   if (!isbn) {
 
@@ -71,11 +70,12 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 
    if (!username) {
 
+    console.log(req.session);
     return res.status(401).json({ message: "User is not logged in" });
 
   }
 
-  const book = books.find((item) => item.isbn === isbn);
+  const book = books[isbn];
 
   if (!book) {
 
@@ -104,7 +104,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 regd_users.delete("/auth/review/:isbn", (req, res) => {
     const isbn = req.params.isbn;
 
-    const username = req.session.username;
+    const username = req.session.authorization.username;
 
 
     if (!isbn) {
@@ -121,7 +121,7 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
     }
 
 
-    const book = books.find((item) => item.isbn === isbn);
+    const book = books[isbn];
 
 
     if (!book) {
