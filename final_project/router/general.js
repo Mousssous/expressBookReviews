@@ -107,7 +107,7 @@ getBooksByISBN.then(
   (err) => console.log("Error on getBooksByISBN")
 );
 
-//Promise (by ISBN)
+//Promise (by title)
 const getBooksByTitle = new Promise((resolve, reject) => {
   let title = "One Thousand and One Nights";
   try {
@@ -120,6 +120,21 @@ const getBooksByTitle = new Promise((resolve, reject) => {
 getBooksByTitle.then(
   (data) => console.log(data),
   (err) => console.log("Error on getBooksByTitle")
+);
+
+//Promise (by author)
+const getBooksByAuthor = new Promise((resolve, reject) => {
+  let author = "Hans Christian Andersen";
+  try {
+    resolve((data = filterBooks(books, "author", author)));
+  } catch (err) {
+    reject(err);
+  }
+});
+
+getBooksByAuthor.then(
+  (data) => console.log(data),
+  (err) => console.log("Error on getBooksByAuthor")
 );
 
 module.exports.general = public_users;
