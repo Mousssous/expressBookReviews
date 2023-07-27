@@ -8,7 +8,7 @@ let users = [{"username":"test", "password":"test"}];
 const isValid = (username)=>{ //returns boolean
 //write code to check is the username is valid
   let validUserName = body.req.username;
-
+  console.log(validUserName);
   if(validUserName.length > 0){
     res.status('Valide username');
   }else{
